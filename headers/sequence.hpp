@@ -4,21 +4,20 @@ template <typename T>
 class sequence
 {
 public:
-    // не должно быть пустой реализации методов
-    // virtual destructor
-    virtual T &get_element(int index);
-    virtual T &get_first() {};
-    virtual T &get_last() {};
-    virtual int get_length() {};
-    virtual sequence<T> *get_subdata(int firs_index, int last_index) {};
-    virtual sequence<T> *append_element(T element) {};
-    virtual sequence<T> *prepend_element(T element) {};
-    virtual sequence<T> *insert_element(T element, int index) {};
-    virtual sequence<T> *concat(sequence<T> *container) {}; // const
-    virtual sequence<T> *immutable_append_element(T element) {};
-    virtual sequence<T> *immutable_prepend_element(T element) {};
-    virtual sequence<T> *immutable_insert_element(T element, int index) {};
-    virtual sequence<T> *immutable_concat(sequence<T> *container) {};
-    virtual void print();
-    virtual void clear();
+    virtual ~sequence() = default;
+    virtual T get_element(const int index) const = 0;
+    virtual T get_first() const = 0;
+    virtual T get_last() const = 0;
+    virtual int get_length() = 0;
+    virtual sequence<T> *get_subdata(int firs_index, const int last_index) const = 0;
+    virtual sequence<T> *append_element(const T &element) = 0;
+    virtual sequence<T> *prepend_element(const T &element) = 0;
+    virtual sequence<T> *insert_element(const T &element, const int index) = 0;
+    virtual sequence<T> *concat(const sequence<T> *container) = 0;
+    virtual sequence<T> *immutable_append_element(const T &element) const = 0;
+    virtual sequence<T> *immutable_prepend_element(const T &element) const = 0;
+    virtual sequence<T> *immutable_insert_element(const T &element, int index) const = 0;
+    virtual sequence<T> *immutable_concat(const sequence<T> *container) const = 0;
+    virtual void print() const = 0;
+    virtual void clear() = 0;
 };

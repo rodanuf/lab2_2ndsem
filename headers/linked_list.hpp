@@ -58,10 +58,10 @@ public:
     void insert_element(const T &element, int index);
     void print();
     linked_list<T> *concat(linked_list<T> *list);
-    iterator begin() { return iterator(head) };
-    iterator end() { return iterator(tail) };
-    immutable_iterator begin() const { return immutable_iterator(head) };
-    immutable_iterator end() const { return immutable_iterator(tail) };
+    iterator begin() { return iterator(head); };
+    iterator end() { return iterator(tail); };
+    immutable_iterator begin() const { return immutable_iterator(head); };
+    immutable_iterator end() const { return immutable_iterator(tail); };
 };
 
 #include "../templates/linked_list.tpp"

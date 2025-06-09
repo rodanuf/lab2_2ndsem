@@ -18,7 +18,7 @@ sequence<T> *main_menu()
         cout << "Choose sequence type: ";
         cout << "1. array_sequence" << endl;
         cout << "2. list_sequence" << endl;
-        cout << "0. exit" << endl; // обработка ошибок пользователя
+        cout << "0. exit" << endl;
         cin >> choice;
 
         try
@@ -34,7 +34,7 @@ sequence<T> *main_menu()
                 sequence_menu(seq);
                 break;
             case 0:
-                return;
+                exit;
             }
         }
         catch (const exception &e)
@@ -45,7 +45,7 @@ sequence<T> *main_menu()
 
     while (true)
     {
-        cout << "Choose data type"
+        cout << "Choose data type";
     }
 }
 
@@ -58,17 +58,17 @@ void sequence_menu(sequence<T> *seq)
 
     while (true)
     {
-        cout << "\n=== Меню последовательности ===" << endl;
-        cout << "1. Получить первый элемент" << endl;
-        cout << "2. Получить последний элемент" << endl;
-        cout << "3. Получить элемент по индексу" << endl;
-        cout << "4. Добавить элемент в конец" << endl;
-        cout << "5. Добавить элемент в начало" << endl;
-        cout << "6. Вставить элемент по индексу" << endl;
-        cout << "7. Объединить с другой последовательностью" << endl;
-        cout << "8. Вывести последовательность" << endl;
-        cout << "0. Вернуться в главное меню" << endl;
-        cout << "Выберите действие: ";
+        cout << "\n=== Sequence Menu ===" << endl;
+        cout << "Choose option: " << endl;
+        cout << "1. Get first element " << endl;
+        cout << "2. Get last element " << endl;
+        cout << "3. Get index element " << endl;
+        cout << "4. Add element to end" << endl;
+        cout << "5. Add element to beginning " << endl;
+        cout << "6. Insert element to index " << endl;
+        cout << "7. Concat with another " << endl;
+        cout << "8. Print sequence " << endl;
+        cout << "0. Return to main menu" << endl;
         cin >> choice;
 
         try
@@ -76,51 +76,51 @@ void sequence_menu(sequence<T> *seq)
             switch (choice)
             {
             case 1:
-                cout << "Первый элемент: " << seq->get_first() << endl;
+                cout << "First element: " << seq->get_first() << endl;
                 break;
             case 2:
-                cout << "Последний элемент: " << seq->get_last() << endl;
+                cout << "Last element: " << seq->get_last() << endl;
                 break;
             case 3:
-                cout << "Введите индекс: ";
+                cout << "Choose index: ";
                 cin >> index;
-                cout << "Элемент: " << seq->get_element(index) << endl;
+                cout << "Element: " << seq->get_element(index) << endl;
                 break;
             case 4:
-                cout << "Введите элемент: ";
+                cout << "Input element: ";
                 cin >> element;
                 seq = seq->append_element(element);
-                cout << "Элемент добавлен." << endl;
+                cout << "Element added." << endl;
                 break;
             case 5:
-                cout << "Введите элемент: ";
+                cout << "Input element: ";
                 cin >> element;
                 seq = seq->prepend_element(element);
-                cout << "Элемент добавлен." << endl;
+                cout << "Elemnt added." << endl;
                 break;
             case 6:
-                cout << "Введите индекс: ";
+                cout << "Choose index: ";
                 cin >> index;
-                cout << "Введите элемент: ";
+                cout << "Input element: ";
                 cin >> element;
                 seq = seq->insert_element(element, index);
-                cout << "Элемент вставлен." << endl;
+                cout << "Element added." << endl;
                 break;
             case 7:
             {
-                cout << "Создание новой последовательности для объединения..." << endl;
+                cout << "Creating a new sequence to concat..." << endl;
                 sequence<T> *other = new array_sequence<T>();
                 int count;
-                cout << "Введите количество элементов: ";
+                cout << "Input count of elements: ";
                 cin >> count;
                 for (int i = 0; i < count; ++i)
                 {
-                    cout << "Элемент " << i << ": ";
+                    cout << "Element" << i << ": ";
                     cin >> element;
                     other = other->append_element(element);
                 }
                 seq = seq->concat(other);
-                cout << "Последовательности объединены." << endl;
+                cout << "Sequences were concatenated." << endl;
                 break;
             }
             case 8:
@@ -129,12 +129,12 @@ void sequence_menu(sequence<T> *seq)
             case 0:
                 return;
             default:
-                cout << "Неверный выбор!" << endl;
+                cout << "Something went wrong, please retry" << endl;
             }
         }
         catch (const exception &e)
         {
-            cout << "Ошибка: " << e.what() << endl;
+            cout << "Error: " << e.what() << endl;
         }
     }
 }

@@ -6,11 +6,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file (GLOB SOURCES "sources/*.cpp")
 file (GLOB HEADERS "headers/*.hpp")
+file (GLOB TEMPLATES "templates/*.tpp")
 
 include_directories(heades)
 
 add_executable(lab2_2ndsem
     sources/lab2.cpp
-
+    templates/array_sequence.tpp 
+    templates/dynamic_array.tpp 
+    templates/linked_list.tpp 
+    templates/list_sequence.tpp 
 )
 

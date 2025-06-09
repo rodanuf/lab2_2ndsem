@@ -29,19 +29,19 @@ template <typename T>
 array_sequence<T>::~array_sequence() {}
 
 template <typename T>
-T array_sequence<T>::get_first()
+T array_sequence<T>::get_first() const
 {
-    return dynamic_array.get_element(0);
+    return this.get_element(0);
 }
 
 template <typename T>
-T array_sequence<T>::get_last()
+T array_sequence<T>::get_last() const
 {
-    return array_s.get_element(array.length - 1);
+    return array_s.get_element(this.length - 1);
 }
 
 template <typename T>
-T array_sequence<T>::get_element(int index)
+T array_sequence<T>::get_element(int index) const
 {
     if (index > array_s.length)
     {
@@ -51,13 +51,13 @@ T array_sequence<T>::get_element(int index)
 }
 
 template <typename T>
-int array_sequence<T>::get_length()
+int array_sequence<T>::get_length() const
 {
     return array_s.length;
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::append_element(T element)
+sequence<T> *array_sequence<T>::append_element(const T &element)
 {
     if (array_s.length == array_s.capacity)
     {
@@ -69,7 +69,7 @@ sequence<T> *array_sequence<T>::append_element(T element)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::prepend_element(T element)
+sequence<T> *array_sequence<T>::prepend_element(const T &element)
 {
     if (array_s.length == array_s.capacity)
     {
@@ -88,7 +88,7 @@ sequence<T> *array_sequence<T>::prepend_element(T element)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::insert_element(T element, int index)
+sequence<T> *array_sequence<T>::insert_element(const T &element, const int index)
 {
     if (index > array_s.length)
     {
@@ -103,7 +103,7 @@ sequence<T> *array_sequence<T>::insert_element(T element, int index)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::concat(sequence<T> *container) // что если передадим nullptr
+sequence<T> *array_sequence<T>::concat(const sequence<T> *container) // что если передадим nullptr
 {
     int buffer_length = array_s.length;
     array_s.length += container->length;
@@ -116,7 +116,7 @@ sequence<T> *array_sequence<T>::concat(sequence<T> *container) // что есл�
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::immutable_append_element(T element)
+sequence<T> *array_sequence<T>::immutable_append_element(const T &element) const
 {
     array_sequence<T> sequence(this);
     sequence.append_element(element);
@@ -124,7 +124,7 @@ sequence<T> *array_sequence<T>::immutable_append_element(T element)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::immutable_prepend_element(T element)
+sequence<T> *array_sequence<T>::immutable_prepend_element(const T &element) const
 {
     array_sequence<T> sequence(this);
     sequence.prepend_element(element);
@@ -132,7 +132,7 @@ sequence<T> *array_sequence<T>::immutable_prepend_element(T element)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::immutable_insert_element(T element, int index)
+sequence<T> *array_sequence<T>::immutable_insert_element(const T &element, const int index) const
 {
     array_sequence<T> sequence(this);
     sequence.insert_element(element, index);
@@ -140,7 +140,7 @@ sequence<T> *array_sequence<T>::immutable_insert_element(T element, int index)
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::immutable_concat(sequence<T> *container)
+sequence<T> *array_sequence<T>::immutable_concat(const sequence<T> *container) const
 {
     array_sequence<T> sequence(this);
     sequence.concat(container);
@@ -148,7 +148,7 @@ sequence<T> *array_sequence<T>::immutable_concat(sequence<T> *container)
 }
 
 template <typename T>
-void array_sequence<T>::print()
+void array_sequence<T>::print() const
 {
     std::cout << "[";
     for (int i = 0; i < array_s.length; i++)

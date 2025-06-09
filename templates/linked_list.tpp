@@ -9,7 +9,7 @@ linked_list<T>::linked_list(const T *elements, int count) : length(count), head(
 {
     if (count < 0 || !elements)
     {
-        throw std::out_of_range("Incorrect input")
+        throw std::out_of_range("Incorrect input");
     }
     for (int i = 0; i < count; i++)
     {
@@ -69,7 +69,7 @@ T linked_list<T>::get_element(int index)
     }
     if (index > length)
     {
-        std::out_of_range("Out of range")
+        std::out_of_range("Out of range");
     }
     node *buffer_node = head;
     for (int i = 0; i < index; i++)
@@ -108,7 +108,7 @@ int linked_list<T>::get_length()
 {
     if (!head)
     {
-        throw std::out_of_range("List does not exists")
+        throw std::out_of_range("List does not exists");
     }
     return length;
 }
@@ -166,7 +166,7 @@ linked_list<T> *linked_list<T>::concat(linked_list<T> *list)
 }
 
 template <typename T>
-linked_list<T>::iterator::iterator(node *node_p = nullptr) : current(node_p) {}
+linked_list<T>::iterator::iterator(node *node_p) : current(node_p) {}
 
 template <typename T>
 typename linked_list<T>::iterator &linked_list<T>::iterator::operator++()
@@ -202,7 +202,7 @@ bool linked_list<T>::iterator::operator!=(const iterator &other) const
 }
 
 template <typename T>
-linked_list<T>::immutable_iterator::immutable_iterator(const node *node_p = nullptr) : current(node_p) {}
+linked_list<T>::immutable_iterator::immutable_iterator(const node *node_p) : current(node_p) {}
 
 template <typename T>
 typename linked_list<T>::immutable_iterator &linked_list<T>::immutable_iterator::operator++()

@@ -10,7 +10,7 @@ dynamic_array<T>::dynamic_array(int length) : data(new T[length]), length(length
 {
     if (length < 0)
     {
-        throw std::out_of_range("")
+        throw std::out_of_range("");
     }
     for (int i = 0; i < length; i++)
     {
@@ -23,11 +23,11 @@ dynamic_array<T>::dynamic_array(T *elements, int length) : data(new T[length]), 
 {
     if (length < 0)
     {
-        throw std::out_of_range("")
+        throw std::out_of_range("");
     }
     if (!elements)
     {
-        throw std::out_of_range("")
+        throw std::out_of_range("");
     }
     for (int i = 0; i < length; i++)
     {
@@ -66,7 +66,7 @@ T dynamic_array<T>::get_element(int index) const
     }
     if (index < 0 && index >= -length)
     {
-        return data[length + index]
+        return data[length + index];
     }
     return data[index];
 }

@@ -15,53 +15,53 @@ template <typename T>
 list_sequence<T>::~list_sequence() {}
 
 template <typename T>
-T list_sequence<T>::get_first()
+T list_sequence<T>::get_first() const
 {
     return list_s.get_first();
 }
 
 template <typename T>
-T list_sequence<T>::get_last()
+T list_sequence<T>::get_last() const
 {
     return list_s.get_last();
 }
 
 template <typename T>
-T list_sequence<T>::get_element(int index)
+T list_sequence<T>::get_element(int index) const
 {
     return list_s.get_element(index);
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::append_element(T element)
+sequence<T> *list_sequence<T>::append_element(const T &element)
 {
     list_s.append_element(element);
     return this;
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::prepend_element(T element)
+sequence<T> *list_sequence<T>::prepend_element(const T &element)
 {
     list_s.prepend_element(element);
     return this;
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::insert_element(T element, int index)
+sequence<T> *list_sequence<T>::insert_element(const T &element, const int index)
 {
     list_s.insert_element(element, index);
     return this;
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::concat(sequence<T> *list)
+sequence<T> *list_sequence<T>::concat(const sequence<T> *list)
 {
     list_s.concat(list);
     return this;
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::immutable_append_element(T element)
+sequence<T> *list_sequence<T>::immutable_append_element(const T &element) const
 {
     list_sequence<T> list(this);
     list.append_element(element);
@@ -69,7 +69,7 @@ sequence<T> *list_sequence<T>::immutable_append_element(T element)
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::immutable_prepend_element(T element)
+sequence<T> *list_sequence<T>::immutable_prepend_element(const T &element) const
 {
     list_sequence<T> list(this);
     list.prepend_element(element);
@@ -77,7 +77,7 @@ sequence<T> *list_sequence<T>::immutable_prepend_element(T element)
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::immutable_insert_element(T element, int index)
+sequence<T> *list_sequence<T>::immutable_insert_element(const T &element, const int index) const
 {
     list_sequence<T> list(this);
     list.insert_element(element, index);
@@ -85,7 +85,7 @@ sequence<T> *list_sequence<T>::immutable_insert_element(T element, int index)
 }
 
 template <typename T>
-sequence<T> *list_sequence<T>::immutable_concat(sequence<T> *container)
+sequence<T> *list_sequence<T>::immutable_concat(const sequence<T> *container) const
 {
     list_sequence<T> list(this);
     list.concat(container);
@@ -93,7 +93,7 @@ sequence<T> *list_sequence<T>::immutable_concat(sequence<T> *container)
 }
 
 template <typename T>
-void list_sequence<T>::print()
+void list_sequence<T>::print() const
 {
     for (int i = 0; i < list_s.length; i++)
     {
