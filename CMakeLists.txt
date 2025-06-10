@@ -8,10 +8,12 @@ file (GLOB SOURCES "sources/*.cpp")
 file (GLOB HEADERS "headers/*.hpp")
 file (GLOB TEMPLATES "templates/*.tpp")
 
-include_directories(heades)
+include_directories(headers)
+include_directories(templates)
 
 add_executable(lab2_2ndsem
     sources/lab2.cpp
+    sources/ui.cpp
     templates/array_sequence.tpp 
     templates/dynamic_array.tpp 
     templates/linked_list.tpp 

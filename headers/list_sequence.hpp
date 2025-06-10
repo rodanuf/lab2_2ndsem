@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "linked_list.hpp"
 #include "sequence.hpp"
 
@@ -18,6 +17,7 @@ public:
     T get_last() const override;
     T get_element(const int index) const override;
     int get_length() const override;
+    sequence<T> *get_subsequence(int start_index, int end_index) const override;
     sequence<T> *append_element(const T &element) override;
     sequence<T> *prepend_element(const T &element) override;
     sequence<T> *insert_element(const T &element, const int index) override;

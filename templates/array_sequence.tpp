@@ -1,4 +1,3 @@
-#include <iostream>
 #include <stdexcept>
 #include "../headers/array_sequence.hpp"
 
@@ -31,19 +30,19 @@ array_sequence<T>::~array_sequence() {}
 template <typename T>
 T array_sequence<T>::get_first() const
 {
-    return this.get_element(0);
+    return this->get_element(0);
 }
 
 template <typename T>
 T array_sequence<T>::get_last() const
 {
-    return array_s.get_element(this.length - 1);
+    return array_s.get_element(array_s.get_length() - 1);
 }
 
 template <typename T>
 T array_sequence<T>::get_element(int index) const
 {
-    if (index > array_s.length)
+    if (index > array_s.get_length())
     {
         throw std::out_of_range("Out of the range");
     }
@@ -53,18 +52,59 @@ T array_sequence<T>::get_element(int index) const
 template <typename T>
 int array_sequence<T>::get_length() const
 {
-    return array_s.length;
+    return array_s.get_length();
+}
+
+void get_nonnegative_index(int &index, int length)
+{
+    if (index < 0)
+    {
+        index = length + index;
+    }
+}
+
+template <typename T>
+sequence<T> *array_sequence<T>::get_subsequence(int start_index, int end_index) const
+{
+    if (start_index > end_index)
+    {
+        start_index = start_index + end_index;
+        end_index = start_index - end_index;
+        start_index = start_index - end_index;
+    }
+    if (start_index < 0 || end_index < 0)
+    {
+        if (start_index > -array_s.get_length() && end_index > -array_s.get_length())
+        {
+            get_nonnegative_index(start_index, array_s.get_length());
+            get_nonnegative_index(end_index, array_s.get_length());
+        }
+        else
+        {
+            throw std::out_of_range("Out of the range");
+        }
+    }
+    if (end_index > array_s.get_length())
+    {
+        throw std::out_of_range("Out of the range");
+    }
+    array_sequence<T> *subsequence = new array_sequence<T>();
+    for (int i = start_index; i < end_index; i++)
+    {
+        subsequence->append_element(array_s.get_element(i));
+    }
+    return subsequence;
 }
 
 template <typename T>
 sequence<T> *array_sequence<T>::append_element(const T &element)
 {
-    if (array_s.length == array_s.capacity)
+    if (this->length == this->capacity)
     {
-        array_s.resize(array_s.length + 1);
+        array_s.resize(array_s.get_length() + 1);
     }
-    array_s.set_element(array_s.length, element);
-    array_s.length++;
+    array_s.set_element(array_s.get_length(), element);
+    this->length++;
     return this;
 }
 
@@ -105,12 +145,12 @@ sequence<T> *array_sequence<T>::insert_element(const T &element, const int index
 template <typename T>
 sequence<T> *array_sequence<T>::concat(const sequence<T> *container) // что если передадим nullptr
 {
-    int buffer_length = array_s.length;
-    array_s.length += container->length;
-    array_s.resize(array_s.length);
-    for (int i = 0; i < container->length; i++)
+    int buffer_length = array_s.get_length();
+    this->length += container->get_length();
+    array_s.resize(array_s.get_length());
+    for (int i = 0; i < container->get_length(); i++)
     {
-        array_s.set_element(buffer_length + i, container->data[i]);
+        array_s.set_element(buffer_length + i, container->get_element(i));
     }
     return this;
 }
@@ -118,7 +158,7 @@ sequence<T> *array_sequence<T>::concat(const sequence<T> *container) // что �
 template <typename T>
 sequence<T> *array_sequence<T>::immutable_append_element(const T &element) const
 {
-    array_sequence<T> sequence(this);
+    array_sequence<T> sequence(*this);
     sequence.append_element(element);
     return *sequence;
 }
@@ -150,18 +190,7 @@ sequence<T> *array_sequence<T>::immutable_concat(const sequence<T> *container) c
 template <typename T>
 void array_sequence<T>::print() const
 {
-    std::cout << "[";
-    for (int i = 0; i < array_s.length; i++)
-    {
-        if (i == array_s.length - 1)
-        {
-            std::cout << array_s.data[i];
-            continue;
-        }
-        std::cout << array_s.data[i] << ", ";
-    }
-    std::cout << "]";
-    std::cout << std::endl;
+    array_s.print();
 }
 
 template <typename T>

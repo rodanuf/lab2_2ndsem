@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 #include "../headers/linked_list.hpp"
 
 template <typename T>
@@ -41,7 +42,7 @@ linked_list<T>::~linked_list()
 }
 
 template <typename T>
-T linked_list<T>::get_first()
+T linked_list<T>::get_first() const
 {
     if (!head)
     {
@@ -51,7 +52,7 @@ T linked_list<T>::get_first()
 }
 
 template <typename T>
-T linked_list<T>::get_last()
+T linked_list<T>::get_last() const
 {
     if (!tail)
     {
@@ -61,7 +62,7 @@ T linked_list<T>::get_last()
 }
 
 template <typename T>
-T linked_list<T>::get_element(int index)
+T linked_list<T>::get_element(int index) const
 {
     if (!head)
     {
@@ -74,33 +75,9 @@ T linked_list<T>::get_element(int index)
     node *buffer_node = head;
     for (int i = 0; i < index; i++)
     {
-        buffer_node = buffer_node->next;
+        buffer_node++;
     }
     return buffer_node->element;
-}
-
-template <typename T>
-linked_list<T> linked_list<T>::get_subdata(int first_index, int last_index)
-{
-    if (!head)
-    {
-        throw std::out_of_range("List is not exists");
-    }
-    if (first_index < last_index)
-    {
-        throw std::out_of_range("Incorrect indexing");
-    }
-    linked_list<T> subdata = linked_list();
-    node *buffer_node = head;
-    for (int i = 0; i <= last_index; i++)
-    {
-        if (i == first_index)
-        {
-            subdata.head = buffer_node;
-        }
-        buffer_node = buffer_node->next;
-    }
-    subdata.tail = buffer_node;
 }
 
 template <typename T>
@@ -159,7 +136,61 @@ void linked_list<T>::insert_element(const T &element, int index)
 }
 
 template <typename T>
-linked_list<T> *linked_list<T>::concat(linked_list<T> *list)
+void linked_list<T>::print() const
+{
+    for (int i = 0; i < list_s.length; i++)
+    {
+        std::cout << "| data=" << list_s.get_element(i) << " |  ";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < list_s.length; i++)
+    {
+        if (i == list_s.length - 1)
+        {
+            std::cout << "| next   |";
+            continue;
+        }
+        std::cout << "| next   |->";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < list_s.length; i++)
+    {
+        if (i == list_s.length - 1)
+        {
+            std::cout << "| prev   |";
+            continue;
+        }
+        std::cout << "| prev   |->";
+    }
+    std::cout << std::endl;
+}
+
+template <typename T>
+linked_list<T> linked_list<T>::get_subdata(int first_index, int last_index) const
+{
+    if (!head)
+    {
+        throw std::out_of_range("List is not exists");
+    }
+    if (first_index < last_index)
+    {
+        throw std::out_of_range("Incorrect indexing");
+    }
+    linked_list<T> subdata = linked_list();
+    node *buffer_node = head;
+    for (int i = 0; i <= last_index; i++)
+    {
+        if (i == first_index)
+        {
+            subdata.head = buffer_node;
+        }
+        buffer_node = buffer_node->next;
+    }
+    subdata.tail = buffer_node;
+}
+
+template <typename T>
+void linked_list<T>::concat(const linked_list<T> *list)
 {
     tail->next = list->head;
     tail = list->tail;

@@ -16,8 +16,8 @@ public:
     T get_first() const override;
     T get_last() const override;
     T get_element(const int index) const override;
-    T get_subdata(const int first_index, const int last_index) const override;
     int get_length() const override;
+    sequence<T> *get_subsequence(int first_index, int last_index) const override;
     sequence<T> *append_element(const T &element) override;
     sequence<T> *prepend_element(const T &element) override;
     sequence<T> *insert_element(const T &element, const int index) override;

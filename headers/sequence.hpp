@@ -8,8 +8,8 @@ public:
     virtual T get_element(const int index) const = 0;
     virtual T get_first() const = 0;
     virtual T get_last() const = 0;
-    virtual int get_length() = 0;
-    virtual sequence<T> *get_subdata(int firs_index, const int last_index) const = 0;
+    virtual int get_length() const = 0;
+    virtual sequence<T> *get_subsequence(int firs_index, int last_index) const = 0;
     virtual sequence<T> *append_element(const T &element) = 0;
     virtual sequence<T> *prepend_element(const T &element) = 0;
     virtual sequence<T> *insert_element(const T &element, const int index) = 0;

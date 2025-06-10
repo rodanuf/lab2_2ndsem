@@ -1,4 +1,3 @@
-#include <iostream>
 #include <stdexcept>
 #include "../headers/list_sequence.hpp"
 
@@ -33,6 +32,19 @@ T list_sequence<T>::get_element(int index) const
 }
 
 template <typename T>
+int list_sequence<T>::get_length() const
+{
+    return list_s.get_length();
+}
+
+template <typename T>
+sequence<T> *list_sequence<T>::get_subsequence(int start_index, int end_index) const
+{
+    list_sequence<T> *list = new list_sequence<T>(list_s.get_subdata(start_index, end_index));
+    return list;
+}
+
+template <typename T>
 sequence<T> *list_sequence<T>::append_element(const T &element)
 {
     list_s.append_element(element);
@@ -63,61 +75,37 @@ sequence<T> *list_sequence<T>::concat(const sequence<T> *list)
 template <typename T>
 sequence<T> *list_sequence<T>::immutable_append_element(const T &element) const
 {
-    list_sequence<T> list(this);
-    list.append_element(element);
-    return *list;
+    list_sequence<T> *new_list = new list_sequence<T>(*this);
+    new_list->append_element(element);
+    return new_list;
 }
 
 template <typename T>
 sequence<T> *list_sequence<T>::immutable_prepend_element(const T &element) const
 {
-    list_sequence<T> list(this);
+    list_sequence<T> list(*this);
     list.prepend_element(element);
-    return *list;
+    return &list;
 }
 
 template <typename T>
 sequence<T> *list_sequence<T>::immutable_insert_element(const T &element, const int index) const
 {
-    list_sequence<T> list(this);
+    list_sequence<T> list(*this);
     list.insert_element(element, index);
-    return *list;
+    return &list;
 }
 
 template <typename T>
 sequence<T> *list_sequence<T>::immutable_concat(const sequence<T> *container) const
 {
-    list_sequence<T> list(this);
+    list_sequence<T> list(*this);
     list.concat(container);
-    return *list;
+    return &list;
 }
 
 template <typename T>
 void list_sequence<T>::print() const
 {
-    for (int i = 0; i < list_s.length; i++)
-    {
-        std::cout << "| data=" << list_s.get_element(i) << " |  ";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < list_s.length; i++)
-    {
-        if (i == list_s.length - 1)
-        {
-            std::cout << "| next   |";
-            continue;
-        }
-        std::cout << "| next   |->";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < list_s.length; i++)
-    {
-        if (i == list_s.length - 1)
-        {
-            std::cout << "| prev   |";
-            continue;
-        }
-        std::cout << "| prev   |->";
-    }
-    std::cout << std::endl;
+    list_s.print();
 }

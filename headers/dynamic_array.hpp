@@ -18,6 +18,7 @@ public:
     int get_length() const;
     void set_element(int index, T value);
     void resize(int new_length);
+    void print() const;
 };
 
 #include "../templates/dynamic_array.tpp"
