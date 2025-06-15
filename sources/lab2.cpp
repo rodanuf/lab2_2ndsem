@@ -3,14 +3,13 @@
 
 using namespace std;
 
-template <typename T>
-int main_menu()
+int main()
 {
     int choice = 0;
     while (true)
     {
         cout << "\n=== Main menu ===" << endl;
-        cout << "Choose sequence type: ";
+        cout << "Choose sequence type: " << endl;
         cout << "1. array_sequence" << endl;
         cout << "2. list_sequence" << endl;
         cout << "0. exit" << endl;
@@ -18,7 +17,7 @@ int main_menu()
 
         try
         {
-            get_sequence_type(choice);
+            get_types_menu(choice);
         }
         catch (const exception &e)
         {

@@ -21,11 +21,11 @@ public:
     sequence<T> *append_element(const T &element) override;
     sequence<T> *prepend_element(const T &element) override;
     sequence<T> *insert_element(const T &element, const int index) override;
-    sequence<T> *concat(const sequence<T> *list) override;
+    sequence<T> *concat(const sequence<T> &container) override;
     sequence<T> *immutable_append_element(const T &element) const override;
     sequence<T> *immutable_prepend_element(const T &element) const override;
     sequence<T> *immutable_insert_element(const T &element, const int index) const override;
-    sequence<T> *immutable_concat(const sequence<T> *container) const override;
+    sequence<T> *immutable_concat(const sequence<T> &container) const override;
     void print() const override;
     void clear() override;
 };

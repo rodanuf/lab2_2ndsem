@@ -9,11 +9,11 @@ private:
         T element;
         node *next;
         node *prev;
-        node(const T &element)
+        node(const T &n_element)
         {
             next = nullptr;
             prev = nullptr;
-            element = element;
+            element = n_element;
         }
     };
     node *head;
@@ -24,9 +24,10 @@ public:
     class iterator
     {
     public:
-        node *current;
+        node **current;
 
-        iterator(node *node_p = nullptr);
+        iterator(node *node_p);
+        iterator operator++(int);
         iterator &operator++();
         T &operator*() const;
         bool operator==(const iterator &other) const;
@@ -35,14 +36,15 @@ public:
     class immutable_iterator
     {
     private:
-        const node *current;
+        node **current;
 
     public:
-        immutable_iterator(const node *node_p = nullptr);
+        immutable_iterator(node *node_p);
+        immutable_iterator operator++(int);
         immutable_iterator &operator++();
         const T &operator*() const;
-        bool operator==(const iterator &other) const;
-        bool operator!=(const iterator &other) const;
+        bool operator==(const immutable_iterator &other) const;
+        bool operator!=(const immutable_iterator &other) const;
     };
     linked_list();
     linked_list(const T *elements, int count);
@@ -51,11 +53,12 @@ public:
     T get_first() const;
     T get_last() const;
     T get_element(int index) const;
-    int get_length();
+    int get_length() const;
     void append_element(const T &element);
     void prepend_element(const T &element);
     void insert_element(const T &element, int index);
     void print() const;
+    void clear();
     linked_list<T> get_subdata(int first_index, int last_index) const;
     iterator begin() { return iterator(head); };
     iterator end() { return iterator(tail); };

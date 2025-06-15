@@ -4,10 +4,10 @@
 #include "../headers/dynamic_array.hpp"
 
 template <typename T>
-dynamic_array<T>::dynamic_array() : data(new T[1]), length(0), capacity(1) {}
+dynamic_array<T>::dynamic_array() : data(new T[1]()), length(0), capacity(1) {}
 
 template <typename T>
-dynamic_array<T>::dynamic_array(int length) : data(new T[length]), length(length), capacity(2 * length)
+dynamic_array<T>::dynamic_array(int length) : data(new T[length]()), length(length), capacity(2 * length)
 {
     if (length < 0)
     {
@@ -61,10 +61,6 @@ dynamic_array<T>::~dynamic_array()
 template <typename T>
 T dynamic_array<T>::get_element(int index) const
 {
-    if (index > length || (index < 0 && index < -length))
-    {
-        throw std::out_of_range("Out of range");
-    }
     if (index < 0 && index >= -length)
     {
         return data[length + index];
@@ -88,12 +84,12 @@ void dynamic_array<T>::set_element(int index, T value)
     }
     if (index > length)
     {
-        data[index] == value;
+        data[index] = value;
         length = index;
     }
     else
     {
-        data[index] == value;
+        data[index] = value;
     }
 }
 
@@ -104,7 +100,7 @@ void dynamic_array<T>::resize(int new_length)
     {
         capacity = new_length * 2;
         T *new_data = new T[capacity]();
-        for (int i = 0; i < capacity; i++)
+        for (int i = 0; i < length; i++)
         {
             new_data[i] = data[i];
         }
@@ -119,21 +115,79 @@ void dynamic_array<T>::resize(int new_length)
             data[i] = T();
         }
     }
+    length = new_length;
 }
 
+template <typename T>
+void dynamic_array<T>::append_element(const T &element)
+{
+    if (length == capacity)
+    {
+        resize(get_length() + 1);
+    }
+    set_element(get_length(), element);
+    length++;
+}
+
+template <typename T>
+void dynamic_array<T>::prepend_element(const T &element)
+{
+    if (length == capacity)
+    {
+        resize(length + 1);
+    }
+    else
+    {
+        length++;
+    }
+    T buffer_element = data[0];
+    for (int i = 0; i < length - 1; i++)
+    {
+        data[i] = buffer_element;
+        buffer_element = data[i + 1];
+        data[i + 1] = data[i];
+    }
+    set_element(0, element);
+}
+template <typename T>
+void dynamic_array<T>::insert_element(const T &value, const int index)
+{
+    if (length == capacity)
+    {
+        resize(length + 1);
+    }
+    length++;
+    T buffer_element = data[index];
+    for (int i = index; i < length - 1; i += 2)
+    {
+        data[i] = data[i + 1];
+        data[i + 1] = buffer_element;
+        buffer_element = data[i];
+    }
+    set_element(index, value);
+}
 template <typename T>
 void dynamic_array<T>::print() const
 {
     std::cout << "[";
-    for (int i = 0; i < array_s.length; i++)
+    for (int i = 0; i < length; i++)
     {
-        if (i == array_s.length - 1)
+        if (i == length - 1)
         {
-            std::cout << array_s.data[i];
-            continue;
+            std::cout << data[i];
+            break;
         }
-        std::cout << array_s.data[i] << ", ";
+        std::cout << data[i] << ", ";
     }
     std::cout << "]";
     std::cout << std::endl;
+}
+
+template <typename T>
+void dynamic_array<T>::clear()
+{
+    for (int i = 0; i < length; i++)
+    {
+        data[i] = T();
+    }
 }

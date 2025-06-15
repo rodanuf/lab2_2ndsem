@@ -6,10 +6,10 @@
 
 using namespace std;
 
-void get_types_menu(const int &sequence_type)
+void get_types_menu(int &sequence_type)
 {
     int type_choice;
-    cout << "Choose data type: ";
+    cout << "Choose data type: " << endl;
     cout << "1. Integer" << endl;
     cout << "2. Double" << endl;
     cout << "3. String" << endl;
@@ -38,7 +38,7 @@ void get_types_menu(const int &sequence_type)
 }
 
 template <typename T>
-void get_sequence_type(const int &sequence_type)
+void get_sequence_type(int &sequence_type)
 {
     sequence<T> *seq = nullptr;
     if (sequence_type == 1)
@@ -124,12 +124,12 @@ void sequence_menu(sequence<T> *seq)
                     cin >> element;
                     other = other->append_element(element);
                 }
-                seq = seq->concat(other);
+                seq = seq->concat(*other);
                 cout << "Sequences were concatenated." << endl;
                 break;
             }
             case 8:
-                seq.print(seq);
+                seq->print();
                 break;
             case 0:
                 return;

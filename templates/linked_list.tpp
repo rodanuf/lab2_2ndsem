@@ -81,7 +81,7 @@ T linked_list<T>::get_element(int index) const
 }
 
 template <typename T>
-int linked_list<T>::get_length()
+int linked_list<T>::get_length() const
 {
     if (!head)
     {
@@ -138,14 +138,14 @@ void linked_list<T>::insert_element(const T &element, int index)
 template <typename T>
 void linked_list<T>::print() const
 {
-    for (int i = 0; i < list_s.length; i++)
+    for (int i = 0; i < length; i++)
     {
-        std::cout << "| data=" << list_s.get_element(i) << " |  ";
+        std::cout << "| data=" << get_element(i) << " |  ";
     }
     std::cout << std::endl;
-    for (int i = 0; i < list_s.length; i++)
+    for (int i = 0; i < length; i++)
     {
-        if (i == list_s.length - 1)
+        if (i == length - 1)
         {
             std::cout << "| next   |";
             continue;
@@ -153,9 +153,9 @@ void linked_list<T>::print() const
         std::cout << "| next   |->";
     }
     std::cout << std::endl;
-    for (int i = 0; i < list_s.length; i++)
+    for (int i = 0; i < length; i++)
     {
-        if (i == list_s.length - 1)
+        if (i == length - 1)
         {
             std::cout << "| prev   |";
             continue;
@@ -163,6 +163,15 @@ void linked_list<T>::print() const
         std::cout << "| prev   |->";
     }
     std::cout << std::endl;
+}
+
+template <typename T>
+void linked_list<T>::clear()
+{
+    for (iterator list_i = begin(); list_i != end(); list_i++)
+    {
+        *list_i = T();
+    }
 }
 
 template <typename T>
@@ -190,14 +199,19 @@ linked_list<T> linked_list<T>::get_subdata(int first_index, int last_index) cons
 }
 
 template <typename T>
-void linked_list<T>::concat(const linked_list<T> *list)
-{
-    tail->next = list->head;
-    tail = list->tail;
-}
+linked_list<T>::iterator::iterator(node *node_p) : current(&node_p) {}
 
 template <typename T>
-linked_list<T>::iterator::iterator(node *node_p) : current(node_p) {}
+typename linked_list<T>::iterator linked_list<T>::iterator::operator++(int)
+{
+    if (!current)
+    {
+        throw std::out_of_range("Invalid iterator");
+    }
+    iterator temp = *this;
+    ++(*this);
+    return temp;
+}
 
 template <typename T>
 typename linked_list<T>::iterator &linked_list<T>::iterator::operator++()
@@ -206,7 +220,7 @@ typename linked_list<T>::iterator &linked_list<T>::iterator::operator++()
     {
         throw std::out_of_range("Invalid iterator");
     }
-    current = current->next;
+    *current = (*current)->next;
     return *this;
 }
 
@@ -217,13 +231,13 @@ T &linked_list<T>::iterator::operator*() const
     {
         throw std::out_of_range("Invalid iterator");
     }
-    return current->next;
+    return (*current)->element;
 }
 
 template <typename T>
 bool linked_list<T>::iterator::operator==(const iterator &other) const
 {
-    return current == other.current;
+    return *current == (*other.current);
 }
 
 template <typename T>
@@ -233,7 +247,19 @@ bool linked_list<T>::iterator::operator!=(const iterator &other) const
 }
 
 template <typename T>
-linked_list<T>::immutable_iterator::immutable_iterator(const node *node_p) : current(node_p) {}
+linked_list<T>::immutable_iterator::immutable_iterator(node *node_p) : current(&node_p) {}
+
+template <typename T>
+typename linked_list<T>::immutable_iterator linked_list<T>::immutable_iterator::operator++(int)
+{
+    if (!current)
+    {
+        throw std::out_of_range("Invalid iterator");
+    }
+    immutable_iterator temp = *this;
+    ++(*this);
+    return temp;
+}
 
 template <typename T>
 typename linked_list<T>::immutable_iterator &linked_list<T>::immutable_iterator::operator++()
@@ -242,7 +268,7 @@ typename linked_list<T>::immutable_iterator &linked_list<T>::immutable_iterator:
     {
         throw std::out_of_range("Invalid iterator");
     }
-    current = current->next;
+    *current = (*current)->next;
     return *this;
 }
 
@@ -253,17 +279,17 @@ const T &linked_list<T>::immutable_iterator::operator*() const
     {
         throw std::out_of_range("Invalid iterator");
     }
-    return current->next;
+    return (*current)->element;
 }
 
 template <typename T>
-bool linked_list<T>::immutable_iterator::operator==(const iterator &other) const
+bool linked_list<T>::immutable_iterator::operator==(const immutable_iterator &other) const
 {
-    return current == other.current;
+    return *current == (*other.current);
 }
 
 template <typename T>
-bool linked_list<T>::immutable_iterator::operator!=(const iterator &other) const
+bool linked_list<T>::immutable_iterator::operator!=(const immutable_iterator &other) const
 {
     return !(*this == other);
 }

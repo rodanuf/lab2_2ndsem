@@ -3,6 +3,7 @@ project(lab2_2ndsem LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 file (GLOB SOURCES "sources/*.cpp")
 file (GLOB HEADERS "headers/*.hpp")
