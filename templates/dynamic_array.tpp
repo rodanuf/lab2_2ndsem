@@ -141,7 +141,7 @@ void dynamic_array<T>::prepend_element(const T &element)
         length++;
     }
     T buffer_element = data[0];
-    for (int i = 0; i < length - 1; i++)
+    for (int i = 0; i <= length - 1; i += 2)
     {
         data[i] = buffer_element;
         buffer_element = data[i + 1];
@@ -158,7 +158,7 @@ void dynamic_array<T>::insert_element(const T &value, const int index)
     }
     length++;
     T buffer_element = data[index];
-    for (int i = index; i < length - 1; i += 2)
+    for (int i = index; i <= length - 1; i += 2)
     {
         data[i] = data[i + 1];
         data[i + 1] = buffer_element;

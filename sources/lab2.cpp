@@ -15,6 +15,10 @@ int main()
         cout << "0. exit" << endl;
         cin >> choice;
 
+        if (choice == 0)
+        {
+            exit(0);
+        }
         try
         {
             get_types_menu(choice);
