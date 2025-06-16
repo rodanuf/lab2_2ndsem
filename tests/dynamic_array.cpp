@@ -46,7 +46,7 @@ TEST(dynamic_array_test, get_element)
     int data[] = {10, 20, 30};
     dynamic_array<int> arr(data, 3);
     EXPECT_EQ(arr.get_element(0), 10);
-    EXPECT_EQ(arr.get_element(-1), 30); // Отрицательный индекс
+    EXPECT_EQ(arr.get_element(-1), 30);
     EXPECT_EQ(arr.get_element(-3), 10);
 }
 
@@ -134,16 +134,16 @@ TEST(dynamic_array_test, capacity_management)
         arr.append_element(i);
     }
     EXPECT_EQ(arr.get_length(), 100);
-    EXPECT_GE(arr.get_length() * 2, arr.get_length()); // Проверка capacity
+    EXPECT_GE(arr.get_length() * 2, arr.get_length());
 }
 
 TEST(dynamic_array_test, boundary_conditions)
 {
     dynamic_array<int> arr(10);
-    arr.set_element(9, 100); // Граничный элемент
+    arr.set_element(9, 100);
     EXPECT_EQ(arr.get_element(9), 100);
 
-    arr.set_element(15, 200); // За пределами длины, но в пределах capacity
+    arr.set_element(15, 200);
     EXPECT_EQ(arr.get_element(15), 200);
     EXPECT_EQ(arr.get_length(), 16);
 }

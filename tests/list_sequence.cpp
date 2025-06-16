@@ -91,7 +91,7 @@ TEST(list_sequence_test, immutable_operations)
     list_sequence<int> seq(arr, 2);
 
     sequence<int> *new_seq = seq.immutable_append_element(3);
-    EXPECT_EQ(seq.get_length(), 2); // Оригинал не изменился
+    EXPECT_EQ(seq.get_length(), 2);
     EXPECT_EQ(new_seq->get_length(), 3);
     delete new_seq;
 }

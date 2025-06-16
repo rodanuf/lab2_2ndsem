@@ -124,9 +124,13 @@ void dynamic_array<T>::append_element(const T &element)
     if (length == capacity)
     {
         resize(get_length() + 1);
+        set_element(get_length() - 1, element);
     }
-    set_element(get_length(), element);
-    length++;
+    else
+    {
+        set_element(get_length(), element);
+        length++;
+    }
 }
 
 template <typename T>
@@ -141,11 +145,14 @@ void dynamic_array<T>::prepend_element(const T &element)
         length++;
     }
     T buffer_element = data[0];
-    for (int i = 0; i <= length - 1; i += 2)
+    if (length != 1)
     {
-        data[i] = buffer_element;
-        buffer_element = data[i + 1];
-        data[i + 1] = data[i];
+        for (int i = 0; i <= length - 1; i += 2)
+        {
+            data[i] = buffer_element;
+            buffer_element = data[i + 1];
+            data[i + 1] = data[i];
+        }
     }
     set_element(0, element);
 }
