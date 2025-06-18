@@ -5,7 +5,13 @@ template <typename T>
 list_sequence<T>::list_sequence() : list_s() {}
 
 template <typename T>
-list_sequence<T>::list_sequence(T *items, int count) : list_s(items, count) {}
+list_sequence<T>::list_sequence(T *items, int count) : list_s(items, count)
+{
+    if (count < 0 || !items)
+    {
+        throw std::out_of_range("Incorrect input");
+    }
+}
 
 template <typename T>
 list_sequence<T>::list_sequence(const linked_list<T> &list) : list_s(list) {}

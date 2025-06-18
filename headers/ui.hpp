@@ -3,6 +3,7 @@
 #include "array_sequence.hpp"
 #include "list_sequence.hpp"
 
+void check_input(int &choice);
 void get_types_menu(int &sequence_type);
 template <typename T>
 void get_sequence_type(int &sequence_type);

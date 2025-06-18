@@ -41,10 +41,6 @@ dynamic_array<T>::dynamic_array(const dynamic_array<T> &dynamic_array)
 {
     length = dynamic_array.length;
     capacity = dynamic_array.capacity;
-    if (data)
-    {
-        delete[] data;
-    }
     data = new T[dynamic_array.capacity];
     for (int i = 0; i < capacity; i++)
     {

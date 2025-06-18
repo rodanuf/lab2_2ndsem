@@ -118,7 +118,7 @@ sequence<T> *array_sequence<T>::insert_element(const T &element, const int index
 }
 
 template <typename T>
-sequence<T> *array_sequence<T>::concat(const sequence<T> &container) // что если передадим nullptr
+sequence<T> *array_sequence<T>::concat(const sequence<T> &container)
 {
     int buffer_length = array_s.get_length();
     array_s.resize(array_s.get_length() + container.get_length());
@@ -164,6 +164,10 @@ sequence<T> *array_sequence<T>::immutable_concat(const sequence<T> &container) c
 template <typename T>
 void array_sequence<T>::print() const
 {
+    if (array_s.get_length() == 0)
+    {
+        throw std::out_of_range("Array doesn't exists");
+    }
     array_s.print();
 }
 
