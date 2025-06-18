@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <memory>
 #include "../headers/ui.hpp"
 #include "../headers/sequence.hpp"
 #include "../headers/array_sequence.hpp"
@@ -83,9 +84,11 @@ void sequence_menu(sequence<T> *seq)
     T element;
     int index;
     int count;
-    sequence<T> *buffer_sequence = nullptr;
+    unique_ptr<sequence<T>> buffer_sequence;
     while (true)
     {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "\n=== Sequence Menu ===" << endl;
         cout << "Choose option: " << endl;
         cout << "1. Get first element " << endl;
@@ -101,6 +104,7 @@ void sequence_menu(sequence<T> *seq)
         cout << "11. Immutable concat with another " << endl;
         cout << "12. Print sequence " << endl;
         cout << "13. Print all sequences " << endl;
+        cout << "14. Clear sequence " << endl;
         cout << "0. Return to previous menu" << endl;
 
         try
@@ -171,7 +175,7 @@ void sequence_menu(sequence<T> *seq)
             {
                 cout << "Input element: " << endl;
                 cin >> element;
-                buffer_sequence = seq->immutable_append_element(element);
+                buffer_sequence.reset(seq->immutable_append_element(element));
                 cout << "Element added." << endl;
                 break;
             }
@@ -179,7 +183,7 @@ void sequence_menu(sequence<T> *seq)
             {
                 cout << "Input element: " << endl;
                 cin >> element;
-                buffer_sequence = seq->immutable_prepend_element(element);
+                buffer_sequence.reset(seq->immutable_prepend_element(element));
                 cout << "Element added." << endl;
                 break;
             }
@@ -189,7 +193,7 @@ void sequence_menu(sequence<T> *seq)
                 cin >> index;
                 cout << "Input element: ";
                 cin >> element;
-                buffer_sequence = seq->immutable_insert_element(element, index);
+                buffer_sequence.reset(seq->immutable_insert_element(element, index));
                 cout << "Element added." << endl;
                 break;
             }
@@ -205,7 +209,7 @@ void sequence_menu(sequence<T> *seq)
                     cin >> element;
                     other = other->append_element(element);
                 }
-                buffer_sequence = seq->immutable_concat(*other);
+                buffer_sequence.reset(seq->immutable_concat(*other));
                 cout << "Sequences were concatenated." << endl;
                 break;
             }
@@ -218,28 +222,26 @@ void sequence_menu(sequence<T> *seq)
             }
             case 13:
             {
-                if (seq->get_length() > 0)
-                {
-                    cout << "Sequence: ";
-                    seq->print();
-                    cout << endl;
-                }
-                if (buffer_sequence->get_length > 0)
+                cout << "Sequence: ";
+                seq->print();
+                cout << endl;
+                if (buffer_sequence != nullptr)
                 {
                     cout << "Buffer sequence: ";
                     buffer_sequence->print();
                     cout << endl;
                 }
-                else
-                {
-                    continue;
-                }
+                break;
+            }
+            case 14:
+            {
+                seq->clear();
+                cout << "Sequence cleared." << endl;
                 break;
             }
             case 0:
             {
                 delete seq;
-                delete buffer_sequence;
                 return;
             }
             default:

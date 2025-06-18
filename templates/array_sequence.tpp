@@ -132,42 +132,38 @@ sequence<T> *array_sequence<T>::concat(const sequence<T> &container)
 template <typename T>
 sequence<T> *array_sequence<T>::immutable_append_element(const T &element) const
 {
-    array_sequence<T> sequence(*this);
-    sequence.append_element(element);
-    return &sequence;
+    array_sequence<T> *sequence = new array_sequence<T>(*this);
+    sequence->append_element(element);
+    return sequence;
 }
 
 template <typename T>
 sequence<T> *array_sequence<T>::immutable_prepend_element(const T &element) const
 {
-    array_sequence<T> sequence(*this);
-    sequence.prepend_element(element);
-    return &sequence;
+    array_sequence<T> *sequence = new array_sequence<T>(*this);
+    sequence->prepend_element(element);
+    return sequence;
 }
 
 template <typename T>
 sequence<T> *array_sequence<T>::immutable_insert_element(const T &element, const int index) const
 {
-    array_sequence<T> sequence(*this);
-    sequence.insert_element(element, index);
-    return &sequence;
+    array_sequence<T> *sequence = new array_sequence<T>(*this);
+    sequence->insert_element(element, index);
+    return sequence;
 }
 
 template <typename T>
 sequence<T> *array_sequence<T>::immutable_concat(const sequence<T> &container) const
 {
-    array_sequence<T> sequence(*this);
-    sequence.concat(container);
-    return &sequence;
+    array_sequence<T> *sequence = new array_sequence<T>(*this);
+    sequence->concat(container);
+    return sequence;
 }
 
 template <typename T>
 void array_sequence<T>::print() const
 {
-    if (array_s.get_length() == 0)
-    {
-        throw std::out_of_range("Array doesn't exists");
-    }
     array_s.print();
 }
 

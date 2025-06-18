@@ -33,9 +33,9 @@ linked_list<T>::linked_list(const linked_list<T> &list) : head(nullptr), tail(nu
 template <typename T>
 linked_list<T>::~linked_list()
 {
-    while (head->next != nullptr)
+    while (head)
     {
-        node *buffer_pointer = head->next;
+        node *buffer_pointer = head;
         head = head->next;
         delete (buffer_pointer);
     }
@@ -66,7 +66,7 @@ T linked_list<T>::get_element(int index) const
 {
     if (!head)
     {
-        std::out_of_range("List is not exists");
+        std::out_of_range("List does not exists");
     }
     if (index > length)
     {
@@ -75,7 +75,7 @@ T linked_list<T>::get_element(int index) const
     node *buffer_node = head;
     for (int i = 0; i < index; i++)
     {
-        buffer_node++;
+        buffer_node = buffer_node->next;
     }
     return buffer_node->element;
 }
@@ -93,15 +93,16 @@ int linked_list<T>::get_length() const
 template <typename T>
 void linked_list<T>::append_element(const T &element)
 {
-    node new_node = node(element);
+    node *new_node = new node(element);
     if (!tail)
     {
-        head = tail = &new_node;
+        head = tail = new_node;
     }
     else
     {
-        new_node.prev = tail;
-        tail = &new_node;
+        new_node->prev = tail;
+        tail->next = new_node;
+        tail = new_node;
     }
     length++;
 }
@@ -109,15 +110,16 @@ void linked_list<T>::append_element(const T &element)
 template <typename T>
 void linked_list<T>::prepend_element(const T &element)
 {
-    node new_node = node(element);
+    node *new_node = new node(element);
     if (!head)
     {
-        head = tail = &new_node;
+        head = tail = new_node;
     }
     else
     {
-        new_node.next = head;
-        head = &new_node;
+        new_node->next = head;
+        head->prev = new_node;
+        head = new_node;
     }
     length++;
 }
@@ -130,9 +132,9 @@ void linked_list<T>::insert_element(const T &element, int index)
     {
         node_pp = &((*node_pp)->next);
     }
-    node new_node = node(element);
-    new_node.next = *node_pp;
-    new_node.prev = (*node_pp)->prev;
+    node *new_node = new node(element);
+    new_node->next = *node_pp;
+    new_node->prev = (*node_pp)->prev;
 }
 
 template <typename T>
@@ -140,27 +142,11 @@ void linked_list<T>::print() const
 {
     for (int i = 0; i < length; i++)
     {
-        std::cout << "| data=" << get_element(i) << " |  ";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < length; i++)
-    {
+        std::cout << "| data=" << get_element(i) << " |->";
         if (i == length - 1)
         {
-            std::cout << "| next   |";
-            continue;
+            std::cout << "| data=" << get_element(i) << " |";
         }
-        std::cout << "| next   |->";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < length; i++)
-    {
-        if (i == length - 1)
-        {
-            std::cout << "| prev   |";
-            continue;
-        }
-        std::cout << "| prev   |->";
     }
     std::cout << std::endl;
 }
