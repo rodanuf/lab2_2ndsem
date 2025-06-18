@@ -10,7 +10,7 @@ private:
 
 public:
     array_sequence();
-    array_sequence(T *elements, int count);
+    array_sequence(T *data, int count);
     array_sequence(const dynamic_array<T> &array);
     ~array_sequence();
     T get_first() const override;

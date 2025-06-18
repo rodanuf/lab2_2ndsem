@@ -81,7 +81,7 @@ void dynamic_array<T>::set_element(int index, T value)
     if (index > length)
     {
         data[index] = value;
-        length = index;
+        length = index + 1;
     }
     else
     {

@@ -6,7 +6,7 @@ template <typename T>
 linked_list<T>::linked_list() : head(nullptr), tail(nullptr), length(0) {}
 
 template <typename T>
-linked_list<T>::linked_list(const T *elements, int count) : length(count), head(nullptr), tail(nullptr)
+linked_list<T>::linked_list(const T *elements, int count) : length(0), head(nullptr), tail(nullptr)
 {
     if (count < 0 || !elements)
     {
@@ -14,20 +14,31 @@ linked_list<T>::linked_list(const T *elements, int count) : length(count), head(
     }
     for (int i = 0; i < count; i++)
     {
-        prepend_element(elements[i]);
+        append_element(elements[i]);
     }
 }
 
 template <typename T>
 linked_list<T>::linked_list(const linked_list<T> &list) : head(nullptr), tail(nullptr), length(list.length)
 {
-    node **node_pp = &head;
-    for (immutable_iterator list_i = list.begin(); list_i != list.end(); list_i++)
+    if (list.head == nullptr)
     {
-        *node_pp = new node(*list_i);
-        node_pp = &((*node_pp)->next);
+        return;
     }
-    tail = *node_pp;
+
+    head = new node(list.head->element);
+    node *current = head;
+    node *src_current = list.head->next;
+
+    while (src_current != nullptr)
+    {
+        current->next = new node(src_current->element);
+        current->next->prev = current;
+        current = current->next;
+        src_current = src_current->next;
+    }
+
+    tail = current;
 }
 
 template <typename T>
@@ -83,10 +94,6 @@ T linked_list<T>::get_element(int index) const
 template <typename T>
 int linked_list<T>::get_length() const
 {
-    if (!head)
-    {
-        throw std::out_of_range("List does not exists");
-    }
     return length;
 }
 
@@ -127,6 +134,20 @@ void linked_list<T>::prepend_element(const T &element)
 template <typename T>
 void linked_list<T>::insert_element(const T &element, int index)
 {
+    if (index < 0 || index > length)
+    {
+        throw std::out_of_range("Index out of range");
+    }
+    if (index == 0)
+    {
+        prepend_element(element);
+        return;
+    }
+    if (index == length)
+    {
+        append_element(element);
+        return;
+    }
     node **node_pp = &head;
     for (int i = 0; i < index; i++)
     {
@@ -135,18 +156,30 @@ void linked_list<T>::insert_element(const T &element, int index)
     node *new_node = new node(element);
     new_node->next = *node_pp;
     new_node->prev = (*node_pp)->prev;
+    if ((*node_pp)->prev)
+    {
+        (*node_pp)->prev->next = new_node;
+    }
+    (*node_pp)->prev = new_node;
+    length++;
 }
 
 template <typename T>
 void linked_list<T>::print() const
 {
-    for (int i = 0; i < length; i++)
+    node *current = head;
+    while (current)
     {
-        std::cout << "| data=" << get_element(i) << " |->";
-        if (i == length - 1)
+        std::cout << "| data=" << current->element;
+        if (current->next)
         {
-            std::cout << "| data=" << get_element(i) << " |";
+            std::cout << " |->";
         }
+        else
+        {
+            std::cout << " |";
+        }
+        current = current->next;
     }
     std::cout << std::endl;
 }
@@ -154,9 +187,11 @@ void linked_list<T>::print() const
 template <typename T>
 void linked_list<T>::clear()
 {
-    for (iterator list_i = begin(); list_i != end(); list_i++)
+    node *current = head;
+    while (current)
     {
-        *list_i = T();
+        current->element = T();
+        current = current->next;
     }
 }
 
@@ -165,23 +200,36 @@ linked_list<T> linked_list<T>::get_subdata(int first_index, int last_index) cons
 {
     if (!head)
     {
-        throw std::out_of_range("List is not exists");
+        throw std::out_of_range("List is empty");
     }
-    if (first_index < last_index)
+    if (first_index < 0 || last_index >= length)
     {
-        throw std::out_of_range("Incorrect indexing");
+        throw std::out_of_range("Index out of range");
     }
-    linked_list<T> subdata = linked_list();
-    node *buffer_node = head;
-    for (int i = 0; i <= last_index; i++)
+    if (first_index > last_index)
     {
-        if (i == first_index)
-        {
-            subdata.head = buffer_node;
-        }
-        buffer_node = buffer_node->next;
+        throw std::out_of_range("Invalid index range");
     }
-    subdata.tail = buffer_node;
+    linked_list<T> subdata;
+    node *start_node = head;
+    for (int i = 0; i < first_index; ++i)
+    {
+        start_node = start_node->next;
+    }
+    subdata.length = last_index - first_index + 1;
+    node **current = &subdata.head;
+    node **prev_node = nullptr;
+    for (int i = first_index; i <= last_index; ++i)
+    {
+        *current = new node(start_node->element);
+        (*current)->prev = (current == &subdata.head) ? nullptr : *(current - 1);
+        prev_node = current;
+        current = &((*current)->next);
+        start_node = start_node->next;
+    }
+
+    subdata.tail = *(current);
+    return subdata;
 }
 
 template <typename T>

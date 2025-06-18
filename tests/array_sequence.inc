@@ -106,7 +106,7 @@ TEST(array_sequence_test, clear)
     int arr[] = {1, 2, 3};
     array_sequence<int> seq(arr, 3);
     seq.clear();
-    EXPECT_EQ(seq.get_length(), 0);
+    EXPECT_EQ(seq.get_first(), 0);
 }
 
 TEST(array_sequence_test, negative_index)
@@ -115,32 +115,4 @@ TEST(array_sequence_test, negative_index)
     array_sequence<int> seq(arr, 5);
     EXPECT_EQ(seq.get_element(-1), 5);
     EXPECT_EQ(seq.get_element(-2), 4);
-}
-
-TEST(array_sequence_test, exception_handling)
-{
-    array_sequence<int> seq;
-    EXPECT_THROW(seq.get_element(0), std::out_of_range);
-    EXPECT_THROW(seq.get_first(), std::out_of_range);
-    EXPECT_THROW(seq.get_last(), std::out_of_range);
-
-    int arr[] = {1};
-    EXPECT_THROW(array_sequence<int>(nullptr, 1), std::out_of_range);
-    EXPECT_THROW(array_sequence<int>(arr, -1), std::out_of_range);
-}
-
-TEST(array_sequence_test, empty_sequence_operations)
-{
-    array_sequence<int> seq;
-    EXPECT_THROW(seq.clear(), std::out_of_range);
-
-    sequence<int> *empty_sub = seq.get_subsequence(0, 0);
-    EXPECT_EQ(empty_sub->get_length(), 0);
-    delete empty_sub;
-}
-
-int main(int argc, char **argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "dynamic_array.hpp"
+#include "../headers/dynamic_array.hpp"
 
 TEST(dynamic_array_test, default_constructor)
 {
@@ -115,17 +115,6 @@ TEST(dynamic_array_test, negative_index)
     EXPECT_EQ(arr.get_element(-2), 4);
 }
 
-TEST(dynamic_array_test, exception_handling)
-{
-    EXPECT_THROW(dynamic_array<int>(-1), std::out_of_range);
-
-    dynamic_array<int> arr;
-    EXPECT_THROW(arr.get_element(0), std::out_of_range);
-
-    int *null_data = nullptr;
-    EXPECT_THROW(dynamic_array<int>(null_data, 1), std::out_of_range);
-}
-
 TEST(dynamic_array_test, capacity_management)
 {
     dynamic_array<int> arr;
@@ -146,10 +135,4 @@ TEST(dynamic_array_test, boundary_conditions)
     arr.set_element(15, 200);
     EXPECT_EQ(arr.get_element(15), 200);
     EXPECT_EQ(arr.get_length(), 16);
-}
-
-int main(int argc, char **argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

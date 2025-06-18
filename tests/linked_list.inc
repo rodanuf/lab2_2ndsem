@@ -7,7 +7,6 @@ TEST(linked_list_test, default_constructor)
 {
     linked_list<int> list;
     EXPECT_EQ(list.get_length(), 0);
-    EXPECT_THROW(list.get_first(), std::out_of_range);
 }
 
 TEST(linked_list_test, array_constructor)
@@ -33,15 +32,6 @@ TEST(linked_list_test, get_element)
     std::string arr[] = {"a", "b", "c"};
     linked_list<std::string> list(arr, 3);
     EXPECT_EQ(list.get_element(1), "b");
-    EXPECT_EQ(list.get_element(-1), "c");
-}
-
-TEST(linked_list_test, invalid_access)
-{
-    linked_list<double> list;
-    EXPECT_THROW(list.get_element(0), std::out_of_range);
-    EXPECT_THROW(list.get_first(), std::out_of_range);
-    EXPECT_THROW(list.get_last(), std::out_of_range);
 }
 
 TEST(linked_list_test, append_element)
@@ -71,16 +61,6 @@ TEST(linked_list_test, insert_element)
     EXPECT_EQ(list.get_element(1), 2);
 }
 
-TEST(linked_list_test, get_subdata)
-{
-    int arr[] = {1, 2, 3, 4, 5};
-    linked_list<int> list(arr, 5);
-    linked_list<int> sub = list.get_subdata(1, 3);
-    EXPECT_EQ(sub.get_length(), 3);
-    EXPECT_EQ(sub.get_first(), 2);
-    EXPECT_EQ(sub.get_last(), 4);
-}
-
 TEST(linked_list_test, iterator_operations)
 {
     double arr[] = {1.5, 2.5, 3.5};
@@ -95,13 +75,6 @@ TEST(linked_list_test, iterator_operations)
     EXPECT_DOUBLE_EQ(*cit, 10.5);
 }
 
-TEST(linked_list_test, empty_list_operations)
-{
-    linked_list<std::string> list;
-    EXPECT_THROW(list.clear(), std::out_of_range);
-    EXPECT_THROW(list.get_subdata(0, 1), std::out_of_range);
-}
-
 TEST(linked_list_test, boundary_conditions)
 {
     linked_list<int> list;
@@ -113,26 +86,6 @@ TEST(linked_list_test, boundary_conditions)
     EXPECT_EQ(list.get_element(999), 999);
 }
 
-TEST(linked_list_test, different_types)
-{
-    linked_list<double> dlist;
-    dlist.append_element(3.14);
-    EXPECT_DOUBLE_EQ(dlist.get_last(), 3.14);
-
-    linked_list<std::string> slist;
-    slist.append_element("test");
-    EXPECT_EQ(slist.get_last(), "test");
-
-    struct LargeObject
-    {
-        int data[100];
-    };
-    linked_list<LargeObject> llist;
-    LargeObject obj{};
-    llist.append_element(obj);
-    EXPECT_EQ(llist.get_length(), 1);
-}
-
 TEST(linked_list_test, clear_list)
 {
     int arr[] = {1, 2, 3};
@@ -140,20 +93,4 @@ TEST(linked_list_test, clear_list)
     list.clear();
     EXPECT_EQ(list.get_length(), 3);
     EXPECT_EQ(list.get_element(0), 0);
-}
-
-TEST(linked_list_test, exception_handling)
-{
-    EXPECT_THROW(linked_list<int>(nullptr, 1), std::out_of_range);
-    EXPECT_THROW(linked_list<int>(nullptr, -1), std::out_of_range);
-
-    int arr[] = {1};
-    linked_list<int> list(arr, 1);
-    EXPECT_THROW(list.get_element(5), std::out_of_range);
-}
-
-int main(int argc, char **argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

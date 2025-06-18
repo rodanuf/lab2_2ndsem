@@ -21,7 +21,11 @@ option(BUILD_GMOCK "Build gmock" OFF)
 add_subdirectory(googletest EXCLUDE_FROM_ALL)
 
 add_executable(tests
-    ${TESTS_SOURCES}
+    tests/main_tests.cpp 
+    tests/array_sequence.inc
+    tests/dynamic_array.inc
+    tests/linked_list.inc
+    tests/list_sequence.inc
     ${HEADERS}
     ${TEMPLATES}
 )

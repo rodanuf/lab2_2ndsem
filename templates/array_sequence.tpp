@@ -5,19 +5,15 @@ template <typename T>
 array_sequence<T>::array_sequence() : array_s() {}
 
 template <typename T>
-array_sequence<T>::array_sequence(T *elements, int count)
+array_sequence<T>::array_sequence(T *data, int count) : array_s(data, count)
 {
-    if (elements == nullptr && count > 0)
+    if (data == nullptr && count > 0)
     {
         throw std::out_of_range("Icorrect input");
     }
     if (count < 0)
     {
         throw std::out_of_range("Incorrect input");
-    }
-    else
-    {
-        array_s(elements, count);
     }
 }
 
