@@ -1,6 +1,4 @@
 #include <stdexcept>
-#include <memory>
-#include <typeinfo.h>
 #include "../headers/list_sequence.hpp"
 
 template <typename T>
@@ -113,80 +111,6 @@ sequence<T> *list_sequence<T>::immutable_concat(const sequence<T> &container) co
     list_sequence<T> *new_list = new list_sequence<T>(*this);
     new_list->concat(container);
     return new_list;
-}
-
-template <typename T>
-list_sequence<T>::list_sequence_iterator::list_sequence_iterator(typename linked_list<T>::iterator it) : current(it) {}
-
-template <typename T>
-typename list_sequence<T>::list_sequence_iterator &list_sequence<T>::list_sequence_iterator::operator++()
-{
-    ++current;
-    return *this;
-}
-
-template <typename T>
-typename list_sequence<T>::list_sequence_iterator list_sequence<T>::list_sequence_iterator::operator++(int)
-{
-    list_sequence_iterator old = *this;
-    ++current;
-    return old;
-}
-
-template <typename T>
-T &list_sequence<T>::list_sequence_iterator::operator*() const
-{
-    return *current;
-}
-
-template <typename T>
-bool list_sequence<T>::list_sequence_iterator::operator==(const iterator_s &other) const
-{
-    auto derived = dynamic_cast<const list_sequence_iterator *>(&other);
-    return derived && current == derived->current;
-}
-
-template <typename T>
-bool list_sequence<T>::list_sequence_iterator::operator!=(const iterator_s &other) const
-{
-    return !(*this == other);
-}
-
-template <typename T>
-list_sequence<T>::i_list_sequence_iterator::i_list_sequence_iterator(typename linked_list<T>::iterator it) : current(it) {}
-
-template <typename T>
-typename list_sequence<T>::i_list_sequence_iterator &list_sequence<T>::i_list_sequence_iterator::operator++()
-{
-    ++current;
-    return *this;
-}
-
-template <typename T>
-typename list_sequence<T>::i_list_sequence_iterator list_sequence<T>::i_list_sequence_iterator::operator++(int)
-{
-    list_sequence_iterator old = *this;
-    ++current;
-    return old;
-}
-
-template <typename T>
-const T &list_sequence<T>::i_list_sequence_iterator::operator*() const
-{
-    return *current;
-}
-
-template <typename T>
-bool list_sequence<T>::i_list_sequence_iterator::operator==(const immutable_iterator_s &other) const
-{
-    auto derived = dynamic_cast<const i_list_sequence_iterator *>(&other);
-    return derived && current == derived->current;
-}
-
-template <typename T>
-bool list_sequence<T>::i_list_sequence_iterator::operator!=(const immutable_iterator_s &other) const
-{
-    return !(*this == other);
 }
 
 template <typename T>
