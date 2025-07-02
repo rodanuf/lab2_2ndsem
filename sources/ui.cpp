@@ -84,7 +84,7 @@ void sequence_menu(sequence<T> *seq)
     T element;
     int index;
     int count;
-    unique_ptr<sequence<T>> buffer_sequence;
+    sequence<T> *buffer_sequence = nullptr;
     while (true)
     {
         cin.clear();
@@ -175,7 +175,7 @@ void sequence_menu(sequence<T> *seq)
             {
                 cout << "Input element: " << endl;
                 cin >> element;
-                buffer_sequence.reset(seq->immutable_append_element(element));
+                buffer_sequence = seq->immutable_append_element(element);
                 cout << "Element added." << endl;
                 break;
             }
@@ -183,7 +183,7 @@ void sequence_menu(sequence<T> *seq)
             {
                 cout << "Input element: " << endl;
                 cin >> element;
-                buffer_sequence.reset(seq->immutable_prepend_element(element));
+                buffer_sequence = seq->immutable_prepend_element(element);
                 cout << "Element added." << endl;
                 break;
             }
@@ -193,7 +193,7 @@ void sequence_menu(sequence<T> *seq)
                 cin >> index;
                 cout << "Input element: ";
                 cin >> element;
-                buffer_sequence.reset(seq->immutable_insert_element(element, index));
+                buffer_sequence = seq->immutable_insert_element(element, index);
                 cout << "Element added." << endl;
                 break;
             }
@@ -209,7 +209,7 @@ void sequence_menu(sequence<T> *seq)
                     cin >> element;
                     other = other->append_element(element);
                 }
-                buffer_sequence.reset(seq->immutable_concat(*other));
+                buffer_sequence = seq->immutable_concat(*other);
                 cout << "Sequences were concatenated." << endl;
                 break;
             }
