@@ -1,6 +1,5 @@
 #include <stdexcept>
 #include <memory>
-#include <iostream>
 #include "../headers/list_sequence.hpp"
 
 template <typename T>
@@ -18,14 +17,12 @@ list_sequence<T>::~list_sequence() {}
 template <typename T>
 T list_sequence<T>::get_first() const
 {
-    std::cout << list_s.get_element(0) << std::endl;
     return list_s.get_first();
 }
 
 template <typename T>
 T list_sequence<T>::get_last() const
 {
-    std::cout << list_s.get_element(2) << std::endl;
     return list_s.get_last();
 }
 
