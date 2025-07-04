@@ -21,4 +21,3 @@ public:
     virtual void print() const = 0;
     virtual void clear() = 0;
 };
-cd
