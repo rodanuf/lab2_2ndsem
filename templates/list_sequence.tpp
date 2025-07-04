@@ -116,12 +116,6 @@ sequence<T> *list_sequence<T>::immutable_concat(const sequence<T> &container) co
 }
 
 template <typename T>
-void list_sequence<T>::print() const
-{
-    list_s.print();
-}
-
-template <typename T>
 void list_sequence<T>::clear()
 {
     list_s.clear();

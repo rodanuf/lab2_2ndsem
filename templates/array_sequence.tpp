@@ -158,12 +158,6 @@ sequence<T> *array_sequence<T>::immutable_concat(const sequence<T> &container) c
 }
 
 template <typename T>
-void array_sequence<T>::print() const
-{
-    array_s.print();
-}
-
-template <typename T>
 void array_sequence<T>::clear()
 {
     if (array_s.get_length() == 0)

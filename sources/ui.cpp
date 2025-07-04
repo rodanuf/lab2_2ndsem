@@ -1,12 +1,25 @@
-#include <iostream>
 #include <limits>
 #include <memory>
 #include "../headers/ui.hpp"
-#include "../headers/sequence.hpp"
-#include "../headers/array_sequence.hpp"
-#include "../headers/list_sequence.hpp"
 
 using namespace std;
+
+template <typename T>
+void print(sequence<T> *container)
+{
+    std::cout << "[";
+    for (int i = 0; i < container->get_length(); i++)
+    {
+        if (i == container->get_length() - 1)
+        {
+            std::cout << container->get_element(i);
+            break;
+        }
+        std::cout << container->get_element(i) << ", ";
+    }
+    std::cout << "]";
+    std::cout << std::endl;
+}
 
 void check_input(int &choice)
 {
@@ -218,19 +231,19 @@ void sequence_menu(sequence<T> *seq)
             case 12:
             {
                 cout << "Sequence: ";
-                seq->print();
+                print(seq);
                 cout << endl;
                 break;
             }
             case 13:
             {
                 cout << "Sequence: ";
-                seq->print();
+                print(seq);
                 cout << endl;
                 if (buffer_sequence != nullptr)
                 {
                     cout << "Buffer sequence: ";
-                    buffer_sequence->print();
+                    print(buffer_sequence);
                     cout << endl;
                 }
                 break;

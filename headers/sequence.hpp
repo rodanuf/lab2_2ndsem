@@ -18,6 +18,5 @@ public:
     virtual sequence<T> *immutable_prepend_element(const T &element) const = 0;
     virtual sequence<T> *immutable_insert_element(const T &element, int index) const = 0;
     virtual sequence<T> *immutable_concat(const sequence<T> &container) const = 0;
-    virtual void print() const = 0;
     virtual void clear() = 0;
 };

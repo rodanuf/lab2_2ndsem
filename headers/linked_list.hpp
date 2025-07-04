@@ -57,7 +57,6 @@ public:
     void append_element(const T &element);
     void prepend_element(const T &element);
     void insert_element(const T &element, int index);
-    void print() const;
     void clear();
     linked_list<T> get_subdata(int first_index, int last_index) const;
     iterator begin() { return iterator(head); };

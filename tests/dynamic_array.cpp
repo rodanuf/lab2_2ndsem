@@ -5,7 +5,6 @@ TEST(dynamic_array_test, default_constructor)
 {
     dynamic_array<int> arr;
     EXPECT_EQ(arr.get_length(), 0);
-    EXPECT_GE(arr.get_length(), 0);
 }
 
 TEST(dynamic_array_test, length_constructor)
@@ -16,6 +15,7 @@ TEST(dynamic_array_test, length_constructor)
     {
         EXPECT_EQ(arr.get_element(i), 0);
     }
+    EXPECT_THROW(dynamic_array<int>(-1), std::out_of_range);
 }
 
 TEST(dynamic_array_test, array_constructor)
@@ -27,6 +27,8 @@ TEST(dynamic_array_test, array_constructor)
     {
         EXPECT_EQ(arr.get_element(i), data[i]);
     }
+    EXPECT_THROW(dynamic_array<int>(nullptr, 5), std::out_of_range);
+    EXPECT_THROW(dynamic_array<int>(data, -1), std::out_of_range);
 }
 
 TEST(dynamic_array_test, copy_constructor)
@@ -55,8 +57,9 @@ TEST(dynamic_array_test, set_element)
     dynamic_array<int> arr(3);
     arr.set_element(1, 42);
     EXPECT_EQ(arr.get_element(1), 42);
-    arr.set_element(0, 10);
-    EXPECT_EQ(arr.get_element(0), 10);
+    arr.set_element(10, 100);
+    EXPECT_EQ(arr.get_length(), 11);
+    EXPECT_EQ(arr.get_element(10), 100);
 }
 
 TEST(dynamic_array_test, resize)
@@ -66,6 +69,9 @@ TEST(dynamic_array_test, resize)
     EXPECT_EQ(arr.get_length(), 5);
     arr.resize(2);
     EXPECT_EQ(arr.get_length(), 2);
+    arr.set_element(1, 10);
+    arr.resize(1);
+    EXPECT_EQ(arr.get_length(), 1);
 }
 
 TEST(dynamic_array_test, append_element)
@@ -75,6 +81,11 @@ TEST(dynamic_array_test, append_element)
     arr.append_element(20);
     EXPECT_EQ(arr.get_length(), 2);
     EXPECT_EQ(arr.get_element(1), 20);
+    for (int i = 0; i < 100; i++)
+    {
+        arr.append_element(i);
+    }
+    EXPECT_EQ(arr.get_length(), 102);
 }
 
 TEST(dynamic_array_test, prepend_element)
@@ -94,6 +105,8 @@ TEST(dynamic_array_test, insert_element)
     arr.insert_element(2, 1);
     EXPECT_EQ(arr.get_length(), 3);
     EXPECT_EQ(arr.get_element(1), 2);
+    arr.insert_element(0, 0);
+    EXPECT_EQ(arr.get_element(0), 0);
 }
 
 TEST(dynamic_array_test, clear)
@@ -101,38 +114,19 @@ TEST(dynamic_array_test, clear)
     int data[] = {1, 2, 3};
     dynamic_array<int> arr(data, 3);
     arr.clear();
+    EXPECT_EQ(arr.get_length(), 3);
     for (int i = 0; i < 3; i++)
     {
         EXPECT_EQ(arr.get_element(i), 0);
     }
 }
 
-TEST(dynamic_array_test, negative_index)
-{
-    int data[] = {1, 2, 3, 4, 5};
-    dynamic_array<int> arr(data, 5);
-    EXPECT_EQ(arr.get_element(-1), 5);
-    EXPECT_EQ(arr.get_element(-2), 4);
-}
-
-TEST(dynamic_array_test, capacity_management)
-{
-    dynamic_array<int> arr;
-    for (int i = 0; i < 100; i++)
-    {
-        arr.append_element(i);
-    }
-    EXPECT_EQ(arr.get_length(), 100);
-    EXPECT_GE(arr.get_length() * 2, arr.get_length());
-}
-
 TEST(dynamic_array_test, boundary_conditions)
 {
-    dynamic_array<int> arr(10);
-    arr.set_element(9, 100);
-    EXPECT_EQ(arr.get_element(9), 100);
-
-    arr.set_element(15, 200);
-    EXPECT_EQ(arr.get_element(15), 200);
-    EXPECT_EQ(arr.get_length(), 16);
+    dynamic_array<int> arr;
+    arr.set_element(1000, 42);
+    EXPECT_EQ(arr.get_length(), 1001);
+    EXPECT_EQ(arr.get_element(1000), 42);
+    arr.set_element(-1, 100);
+    EXPECT_EQ(arr.get_element(arr.get_length() - 1), 100);
 }

@@ -21,7 +21,6 @@ public:
     void append_element(const T &element);
     void prepend_element(const T &element);
     void insert_element(const T &element, const int index);
-    void print() const;
     void clear();
 };
 

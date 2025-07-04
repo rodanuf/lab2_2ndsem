@@ -1,4 +1,3 @@
-#include <iostream>
 #include <algorithm>
 #include <stdexcept>
 #include "../headers/dynamic_array.hpp"
@@ -168,22 +167,6 @@ void dynamic_array<T>::insert_element(const T &value, const int index)
         buffer_element = data[i];
     }
     set_element(index, value);
-}
-template <typename T>
-void dynamic_array<T>::print() const
-{
-    std::cout << "[";
-    for (int i = 0; i < length; i++)
-    {
-        if (i == length - 1)
-        {
-            std::cout << data[i];
-            break;
-        }
-        std::cout << data[i] << ", ";
-    }
-    std::cout << "]";
-    std::cout << std::endl;
 }
 
 template <typename T>

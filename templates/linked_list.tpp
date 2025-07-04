@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <iostream>
 #include "../headers/linked_list.hpp"
 
 template <typename T>
@@ -165,26 +164,6 @@ void linked_list<T>::insert_element(const T &element, int index)
 }
 
 template <typename T>
-void linked_list<T>::print() const
-{
-    node *current = head;
-    while (current)
-    {
-        std::cout << "| data=" << current->element;
-        if (current->next)
-        {
-            std::cout << " |->";
-        }
-        else
-        {
-            std::cout << " |";
-        }
-        current = current->next;
-    }
-    std::cout << std::endl;
-}
-
-template <typename T>
 void linked_list<T>::clear()
 {
     node *current = head;
@@ -218,12 +197,10 @@ linked_list<T> linked_list<T>::get_subdata(int first_index, int last_index) cons
     }
     subdata.length = last_index - first_index + 1;
     node **current = &subdata.head;
-    node **prev_node = nullptr;
     for (int i = first_index; i <= last_index; ++i)
     {
         *current = new node(start_node->element);
         (*current)->prev = (current == &subdata.head) ? nullptr : *(current - 1);
-        prev_node = current;
         current = &((*current)->next);
         start_node = start_node->next;
     }
