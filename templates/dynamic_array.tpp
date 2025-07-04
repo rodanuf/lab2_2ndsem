@@ -8,10 +8,6 @@ dynamic_array<T>::dynamic_array() : data(new T[1]()), length(0), capacity(1) {}
 template <typename T>
 dynamic_array<T>::dynamic_array(int length) : data(new T[length]()), length(length), capacity(2 * length)
 {
-    if (length < 0)
-    {
-        throw std::out_of_range("Incorrect length");
-    }
     for (int i = 0; i < length; i++)
     {
         data[i] = T();
@@ -21,10 +17,6 @@ dynamic_array<T>::dynamic_array(int length) : data(new T[length]()), length(leng
 template <typename T>
 dynamic_array<T>::dynamic_array(T *elements, int length) : data(new T[length]), length(length), capacity(2 * length)
 {
-    if (length < 0)
-    {
-        throw std::out_of_range("Incorrect length");
-    }
     if (!elements)
     {
         throw std::out_of_range("Incorrect length");
@@ -56,10 +48,6 @@ dynamic_array<T>::~dynamic_array()
 template <typename T>
 T dynamic_array<T>::get_element(int index) const
 {
-    if (index < 0 && index >= -length)
-    {
-        return data[length + index];
-    }
     return data[index];
 }
 
@@ -74,7 +62,7 @@ void dynamic_array<T>::set_element(int index, T value)
 {
     if (index > capacity)
     {
-        resize(index);
+        resize(index + 1);
         data[index] = value;
     }
     if (index > length)

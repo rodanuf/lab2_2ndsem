@@ -5,17 +5,7 @@ template <typename T>
 array_sequence<T>::array_sequence() : array_s() {}
 
 template <typename T>
-array_sequence<T>::array_sequence(T *data, int count) : array_s(data, count)
-{
-    if (data == nullptr && count > 0)
-    {
-        throw std::out_of_range("Icorrect input");
-    }
-    if (count < 0)
-    {
-        throw std::out_of_range("Incorrect input");
-    }
-}
+array_sequence<T>::array_sequence(T *data, int count) : array_s(data, count) {}
 
 template <typename T>
 array_sequence<T>::array_sequence(const dynamic_array<T> &array) : array_s(array) {}
@@ -26,19 +16,27 @@ array_sequence<T>::~array_sequence() {}
 template <typename T>
 T array_sequence<T>::get_first() const
 {
+    if (array_s.get_length() == 0)
+    {
+        throw std::out_of_range("Out of range");
+    }
     return this->get_element(0);
 }
 
 template <typename T>
 T array_sequence<T>::get_last() const
 {
-    return array_s.get_element(array_s.get_length() - 1);
+    if (array_s.get_length() == 0)
+    {
+        throw std::out_of_range("Out of range");
+    }
+    return this->get_element(array_s.get_length() - 1);
 }
 
 template <typename T>
 T array_sequence<T>::get_element(int index) const
 {
-    if (index > array_s.get_length() || (index < 0 && index < -array_s.get_length()))
+    if (index >= array_s.get_length() || (index < 0 && index < -array_s.get_length()))
     {
         throw std::out_of_range("Out of range");
     }
@@ -77,7 +75,7 @@ sequence<T> *array_sequence<T>::get_subsequence(int start_index, int end_index) 
         throw std::out_of_range("Out of the range");
     }
     array_sequence<T> *subsequence = new array_sequence<T>();
-    for (int i = start_index; i < end_index; i++)
+    for (int i = start_index; i < end_index + 1; i++)
     {
         subsequence->append_element(array_s.get_element(i));
     }

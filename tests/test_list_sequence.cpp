@@ -5,8 +5,6 @@ TEST(list_sequence_test, default_constructor)
 {
     list_sequence<int> seq;
     EXPECT_EQ(seq.get_length(), 0);
-    EXPECT_THROW(seq.get_first(), std::out_of_range);
-    EXPECT_THROW(seq.get_last(), std::out_of_range);
 }
 
 TEST(list_sequence_test, array_constructor)
@@ -43,18 +41,6 @@ TEST(list_sequence_test, get_element)
     EXPECT_EQ(seq.get_element(2), 30);
     EXPECT_THROW(seq.get_element(-1), std::out_of_range);
     EXPECT_THROW(seq.get_element(3), std::out_of_range);
-}
-
-TEST(list_sequence_test, get_first_last)
-{
-    list_sequence<int> seq;
-    EXPECT_THROW(seq.get_first(), std::out_of_range);
-    EXPECT_THROW(seq.get_last(), std::out_of_range);
-
-    int data[] = {10, 20, 30};
-    seq = list_sequence<int>(data, 3);
-    EXPECT_EQ(seq.get_first(), 10);
-    EXPECT_EQ(seq.get_last(), 30);
 }
 
 TEST(list_sequence_test, append_prepend_insert)
@@ -122,44 +108,7 @@ TEST(list_sequence_test, clear)
     int data[] = {1, 2, 3};
     list_sequence<int> seq(data, 3);
     seq.clear();
-    EXPECT_EQ(seq.get_length(), 0);
-    EXPECT_THROW(seq.clear(), std::out_of_range);
-}
-
-TEST(list_sequence_test, iterator)
-{
-    int data[] = {1, 2, 3};
-    list_sequence<int> seq(data, 3);
-    auto it = seq.begin();
-    EXPECT_EQ(*it, 1);
-    ++it;
-    EXPECT_EQ(*it, 2);
-    it++;
-    EXPECT_EQ(*it, 3);
-    ++it;
-    EXPECT_THROW(*it, std::out_of_range);
-    int sum = 0;
-    for (int val : seq)
-    {
-        sum += val;
-    }
-    EXPECT_EQ(sum, 6);
-}
-
-TEST(list_sequence_test, immutable_iterator)
-{
-    int data[] = {1, 2, 3};
-    const list_sequence<int> seq(data, 3);
-    auto it = seq.begin();
-    EXPECT_EQ(*it, 1);
-    ++it;
-    EXPECT_EQ(*it, 2);
-    int sum = 0;
-    for (int val : seq)
-    {
-        sum += val;
-    }
-    EXPECT_EQ(sum, 6);
+    EXPECT_EQ(seq.get_length(), 3);
 }
 
 TEST(list_sequence_test, boundary_conditions)

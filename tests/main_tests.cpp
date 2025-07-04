@@ -4,10 +4,10 @@
 #include "../headers/linked_list.hpp"
 #include "../headers/dynamic_array.hpp"
 
-#include "array_sequence.inc"
-#include "list_sequence.inc"
-#include "linked_list.inc"
-#include "dynamic_array.inc"
+#include "test_array_sequence.cpp"
+#include "test_list_sequence.cpp"
+#include "test_linked_list.cpp"
+#include "test_dynamic_array.cpp"
 
 int main(int argc, char **argv)
 {

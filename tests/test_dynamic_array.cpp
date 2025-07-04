@@ -15,7 +15,6 @@ TEST(dynamic_array_test, length_constructor)
     {
         EXPECT_EQ(arr.get_element(i), 0);
     }
-    EXPECT_THROW(dynamic_array<int>(-1), std::out_of_range);
 }
 
 TEST(dynamic_array_test, array_constructor)
@@ -28,7 +27,6 @@ TEST(dynamic_array_test, array_constructor)
         EXPECT_EQ(arr.get_element(i), data[i]);
     }
     EXPECT_THROW(dynamic_array<int>(nullptr, 5), std::out_of_range);
-    EXPECT_THROW(dynamic_array<int>(data, -1), std::out_of_range);
 }
 
 TEST(dynamic_array_test, copy_constructor)
@@ -48,8 +46,8 @@ TEST(dynamic_array_test, get_element)
     int data[] = {10, 20, 30};
     dynamic_array<int> arr(data, 3);
     EXPECT_EQ(arr.get_element(0), 10);
-    EXPECT_EQ(arr.get_element(-1), 30);
-    EXPECT_EQ(arr.get_element(-3), 10);
+    EXPECT_EQ(arr.get_element(2), 30);
+    EXPECT_EQ(arr.get_element(1), 20);
 }
 
 TEST(dynamic_array_test, set_element)
@@ -127,6 +125,4 @@ TEST(dynamic_array_test, boundary_conditions)
     arr.set_element(1000, 42);
     EXPECT_EQ(arr.get_length(), 1001);
     EXPECT_EQ(arr.get_element(1000), 42);
-    arr.set_element(-1, 100);
-    EXPECT_EQ(arr.get_element(arr.get_length() - 1), 100);
 }

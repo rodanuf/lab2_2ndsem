@@ -49,14 +49,15 @@ linked_list<T>::~linked_list()
         head = head->next;
         delete (buffer_pointer);
     }
+    tail = nullptr;
 }
 
 template <typename T>
 T linked_list<T>::get_first() const
 {
-    if (!head)
+    if (length == 0)
     {
-        std::out_of_range("List is not exists");
+        throw std::out_of_range("List is not exists");
     }
     return head->element;
 }
@@ -64,9 +65,9 @@ T linked_list<T>::get_first() const
 template <typename T>
 T linked_list<T>::get_last() const
 {
-    if (!tail)
+    if (length == 0)
     {
-        std::out_of_range("List is not exists");
+        throw std::out_of_range("List is not exists");
     }
     return tail->element;
 }
@@ -76,11 +77,11 @@ T linked_list<T>::get_element(int index) const
 {
     if (!head)
     {
-        std::out_of_range("List does not exists");
+        throw std::out_of_range("List does not exists");
     }
-    if (index > length)
+    if (index >= length || index < 0)
     {
-        std::out_of_range("Out of range");
+        throw std::out_of_range("Out of range");
     }
     node *buffer_node = head;
     for (int i = 0; i < index; i++)

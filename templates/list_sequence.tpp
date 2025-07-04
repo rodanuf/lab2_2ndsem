@@ -1,19 +1,13 @@
 #include <stdexcept>
 #include <memory>
-#include <typeinfo.h>
+#include <iostream>
 #include "../headers/list_sequence.hpp"
 
 template <typename T>
 list_sequence<T>::list_sequence() : list_s() {}
 
 template <typename T>
-list_sequence<T>::list_sequence(T *items, int count) : list_s(items, count)
-{
-    if (count < 0 || !items)
-    {
-        throw std::out_of_range("Incorrect input");
-    }
-}
+list_sequence<T>::list_sequence(T *items, int count) : list_s(items, count) {}
 
 template <typename T>
 list_sequence<T>::list_sequence(const linked_list<T> &list) : list_s(list) {}
@@ -24,12 +18,14 @@ list_sequence<T>::~list_sequence() {}
 template <typename T>
 T list_sequence<T>::get_first() const
 {
+    std::cout << list_s.get_element(0) << std::endl;
     return list_s.get_first();
 }
 
 template <typename T>
 T list_sequence<T>::get_last() const
 {
+    std::cout << list_s.get_element(2) << std::endl;
     return list_s.get_last();
 }
 
