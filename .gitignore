@@ -3,5 +3,3 @@ build/
 *.exe
 *.out
 *.excalidraw
-googletest/*
-!googletest/.git*
