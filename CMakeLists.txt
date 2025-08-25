@@ -4,6 +4,19 @@ project(lab2_2ndsem LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+)
+
+set(BUILD_GMOCK OFF CACHE BOOL "Build Google Mock" FORCE)
+set(BUILD_GTEST ON CACHE BOOL "Build Google Test" FORCE)
+set(gtest_force_shared_crt ON CACHE BOOL "Use multi-threaded DLL" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
 include_directories(${PROJECT_SOURCE_DIR}/headers)
 
 file(GLOB SOURCES "sources/*.cpp")
@@ -16,7 +29,6 @@ add_executable(lab2_2ndsem
 )
 
 option(BUILD_GMOCK "Build gmock" OFF)
-add_subdirectory(googletest EXCLUDE_FROM_ALL)
 
 add_executable(tests
     tests/main_tests.cpp 
